@@ -7,6 +7,33 @@ interface PredictionResult {
   confidence: number
 }
 
+const exampleTexts = {
+  severe: "how do I get Ambien from a doctor? I got a little bit of mild drugs from therapists but I don't want to push my luck. I'm thinking I can tell them that melatonin doesn't work for me (true), but how does one get that script? thank you",
+  moderate: "I want to kill myself, but my ex (who I would like to say is also my best friend) would blame himself We were best friends. We dated. He dumped me two months ago because he lost feelings. He still wants to be friends, and he wants me in his life. He blames himself for how Iâ€™m feeling, even though Iâ€™ve told him so so many times that Iâ€™ve struggled with mental illness for years and no one can control how I feel. I just want to fucking end it. He even asked me today if I was planning on killing myself, and I lied and said no. I just want to make sure heâ€™ll be okay. I donâ€™t know what to do. Should I push him away by distancing myself? Actively tell him he needs to stay away so I donâ€™t hurt him? Pretend to get better so he stops worrying? I donâ€™t know. That sounds cruel. Iâ€™m so confused and lost right now.",
+  normal: "Life has its ups and downs, but overall I'm doing well. I enjoy spending time with friends and family, and while I sometimes feel stressed, I can handle it. I'm looking forward to future plans."
+}
+
+const ExampleButton = ({
+  label,
+  text,
+  onClick,
+  color
+}: {
+  label: string;
+  text: string;
+  onClick: () => void;
+  color: string;
+}) => (
+  <motion.button
+    whileHover={{ scale: 1.02 }}
+    whileTap={{ scale: 0.98 }}
+    onClick={() => onClick()}
+    className={`px-3 py-2 rounded-lg text-sm font-medium ${color} transition-colors`}
+  >
+    {label}
+  </motion.button>
+)
+
 const getResultColor = (label: string) => {
   switch (label) {
     case 'severe':
@@ -69,6 +96,29 @@ export default function Home() {
         </h1>
 
         <div className="space-y-4">
+          <div className="space-y-2">
+            <p className="text-sm text-gray-600 font-medium">Try example texts:</p>
+            <div className="flex flex-wrap gap-2">
+              <ExampleButton
+                label="Normal Text Example"
+                text={exampleTexts.normal}
+                onClick={() => setText(exampleTexts.normal)}
+                color="bg-green-100 text-green-700 hover:bg-green-200"
+              />
+              <ExampleButton
+                label="Moderate Example"
+                text={exampleTexts.moderate}
+                onClick={() => setText(exampleTexts.moderate)}
+                color="bg-yellow-100 text-yellow-700 hover:bg-yellow-200"
+              />
+              <ExampleButton
+                label="Severe Example"
+                text={exampleTexts.severe}
+                onClick={() => setText(exampleTexts.severe)}
+                color="bg-red-100 text-red-700 hover:bg-red-200"
+              />
+            </div>
+          </div>
           <textarea
             className="w-full h-32 p-4 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
             placeholder="Enter your text here..."
